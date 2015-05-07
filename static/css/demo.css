@@ -1,0 +1,44 @@
+body,
+ul{
+    margin: 0;
+    padding: 0;
+}
+ul{
+    list-style: none;
+}
+p{
+    margin-top: 40px;
+}
+.container{
+    margin: 0 auto;
+    width: 960px;
+}
+.roll-wrap{
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+.roll_row .roll__list::before, .roll_row .roll__list::after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+.roll_row .roll__list::after {
+    clear: both;
+}
+.roll_row .roll__list{
+    width: 9999px;
+}
+.roll_row .roll__list li{
+    float: left;
+    display: block;
+    margin-right: 20px;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+    color: #fff;
+    background-color: #ff9900;
+}
