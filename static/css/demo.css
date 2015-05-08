@@ -11,8 +11,12 @@ p{
 }
 .container{
     margin: 0 auto;
-    width: 960px;
+    width: 940px;
 }
+.roll-wrap:hover .control{
+    display: block;
+}
+
 .roll-wrap{
     position: relative;
     width: 100%;
@@ -41,4 +45,23 @@ p{
     text-align: center;
     color: #fff;
     background-color: #ff9900;
+}
+.control{
+    position: absolute;
+    top: 30px;
+    display: none;
+    padding: 10px 5px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    background-color: rgba(0, 0, 0, .3);
+}
+.control:hover{
+    background-color: rgba(0, 0, 0, .5);
+}
+.control.pre{
+    left: 5px;
+}
+.control.next{
+    right: 5px;
 }
