@@ -10,6 +10,7 @@
             minTime = (typeof obj.space === 'number') ? ((obj.space >= 100) ? obj.space : 100) : 100,    //最小间隔为 100 ms ，
             space = minTime + v || 5000 + v,    //滚动间隔  默认 5000ms
             isRoll = obj.isRoll,   //自动播放
+            isStart = true,
             roll = function(ori, n, v){
                 var $ul = $self.find('.roll__list'),
                     $item = $ul.find('li'),
@@ -23,18 +24,19 @@
 
                         if(ori === 'left' || ori === 'top'){
                             for(i = 0; i < n; i++){
-                                range += $($item[i]).outerWidth(true);
+                                range += ori === 'left' ? $($item[i]).outerWidth(true) : $($item[i]).outerHeight(true); // left 取 width，top 取 height
                                 arr.push($item[i]);
                             }
                         } else if(ori === 'right' || ori === 'bottom'){
                             for(i = len - n; n > 0; n--, i++){
-                                range += $($item[i]).outerWidth(true);
+                                range += ori === 'right' ? $($item[i]).outerWidth(true) : $($item[i]).outerHeight(true);
                                 arr.push($item[i]);
                             }
                         }
                         return arr;
                     };
 
+                isStart = false;         //关闭滚动
                 sliceItem = memory();
                 cloneSliceItem = $(sliceItem).clone();
                 //判断往哪个方向移动
@@ -46,6 +48,7 @@
                         },v,function(){
                             $(this).css({'margin-left': 0});
                             $(sliceItem).remove();
+                            isStart = true;    //开启滚动
                         });
                         break;
                     case 'right':
@@ -55,6 +58,7 @@
                             'margin-left': 0
                         },v,function(){
                             $(sliceItem).remove();
+                            isStart = true;    //开启滚动
                         });
                         break;
                     case 'top':
@@ -64,6 +68,7 @@
                         },v,function(){
                             $(this).css({'margin-top': 0});
                             $(sliceItem).remove();
+                            isStart = true;    //开启滚动
                         });
                         break;
                     case 'bottom':
@@ -73,37 +78,52 @@
                             'margin-top': 0
                         },v, function(){
                             $(sliceItem).remove();
+                            isStart = true;    //开启滚动
                         });
                         break;
                 }
             },
             init = function(){
-                var $pre = $self.find('.pre'),
-                    $next = $self.find('.next'),
-                    $ul = $self.find('.roll__list'),
+                var $ul = $self.find('.roll__list'),
                     $item = $ul.find('li'),
-                    len = $item.length;
+                    len = $item.length,
+                    sil;
 
-                if(len > 1 && num <= len ){
+                num = num <= len ? num : len;   //滚动个数超过列表数，取列表数
+                if(len > 1){
                     if(isRoll){
-                        setInterval(function(){
+                        sil = setInterval(function(){
                             roll(orientation, num, v);
                         },space);
                     }
-                    $pre.on('click', function(){
-                        //横向滚动
-                        if(orientation === 'left' || orientation === 'right'){
-                            roll('left', num, v);
-                        } else{           //纵向滚动
-                            roll('top', num, v);
+                    $self.on('click', '.pre', function(){
+                        if(isStart){
+                            //横向滚动
+                            if(orientation === 'left' || orientation === 'right'){
+                                roll('left', num, v);
+                            } else{           //纵向滚动
+                                roll('top', num, v);
+                            }
                         }
-                    });
-                    $next.on('click', function(){
-                        //横向滚动
-                        if(orientation === 'left' || orientation === 'right'){
-                            roll('right', num, v);
-                        } else{           //纵向滚动
-                            roll('bottom', num, v);
+                    }).
+                    on('click', '.next', function(){
+                        if(isStart){
+                            //横向滚动
+                            if(orientation === 'left' || orientation === 'right'){
+                                roll('right', num, v);
+                            } else{           //纵向滚动
+                                roll('bottom', num, v);
+                            }
+                        }
+                    }).
+                    on('mouseover', function(){
+                        clearInterval(sil);
+                    }).
+                    on('mouseout', function(){
+                        if(isRoll){
+                            sil = setInterval(function(){
+                                roll(orientation, num, v);
+                            },space);
                         }
                     });
                 }
@@ -111,11 +131,4 @@
 
         init();
     };
-    $('.roll_row').rollSlide({
-        orientation: 'right',
-        num: 2,
-        v: 1500,
-        //space: 3000,
-        isRoll: false
-    });
 })(jQuery);

@@ -8,7 +8,7 @@
 <body>
 <div class="container">
     <p>左右滚动</p>
-    <div class="roll-wrap roll_row">
+    <div class="roll-wrap roll_row" id="a">
         <ul class="roll__list">
             <li>1</li>
             <li>2</li>
@@ -25,8 +25,82 @@
         <a class="control pre" href="javascript:;">&lt;</a>
         <a class="control next" href="javascript:;">&gt;</a>
     </div>
+    <p>左右自动滚动</p>
+    <div class="roll-wrap roll_row" id="b">
+        <ul class="roll__list">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+            <li>11</li>
+        </ul>
+        <a class="control pre" href="javascript:;">&lt;</a>
+        <a class="control next" href="javascript:;">&gt;</a>
+    </div>
+    <p>上下滚动</p>
+    <div class="roll-wrap roll_col" id="c">
+        <ul class="roll__list">
+            <li class="li-1">1</li>
+            <li class="li-2">2</li>
+            <li class="li-3">3</li>
+            <li class="li-4">4</li>
+        </ul>
+        <a class="control pre" href="javascript:;">&lt;</a>
+        <a class="control next" href="javascript:;">&gt;</a>
+    </div>
+    <p>上下自动滚动</p>
+    <div class="roll-wrap roll_col h600" id="d">
+        <ul class="roll__list">
+            <li class="li-1">1</li>
+            <li class="li-2">2</li>
+            <li class="li-3">3</li>
+            <li class="li-4">4</li>
+            <li class="li-1">5</li>
+            <li class="li-2">6</li>
+            <li class="li-3">7</li>
+            <li class="li-4">8</li>
+            <li class="li-2">9</li>
+        </ul>
+        <a class="control pre" href="javascript:;">&lt;</a>
+        <a class="control next" href="javascript:;">&gt;</a>
+    </div>
 </div>
 <script src="./static/js/jquery-1.11.2.min.js"></script>
 <script src="./static/js/rollSlide.js"></script>
+<script>
+    $('#a').rollSlide({
+        orientation: 'left',
+        num: 4,
+        v: 1500,
+        space: 3000,
+        isRoll: true
+    });
+    $('#b').rollSlide({
+        orientation: 'right',
+        num: 2,
+        v: 1500,
+        space: 3000,
+        isRoll: true
+    });
+    $('#c').rollSlide({
+        orientation: 'top',
+        num: 1,
+        v: 1000,
+        isRoll: true
+    });
+    $('#d').rollSlide({
+        orientation: 'bottom',
+        num: 3,
+        v: 1500,
+        space: 1000,
+        isRoll: true
+    });
+</script>
 </body>
 </html>
