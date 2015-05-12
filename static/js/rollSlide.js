@@ -18,6 +18,7 @@
                     i,len = $item.length,
                     sliceItem = [],
                     cloneSliceItem = [],
+                    startTime = (new Date()).getTime(),
                     //存放滚动过的 item
                     memory = function(){
                         var arr = [];
@@ -87,26 +88,11 @@
                 var $ul = $self.find('.roll__list'),
                     $item = $ul.find('li'),
                     len = $item.length,
-                    sil;
+                    timer;
 
                 num = num <= len ? num : len;   //滚动个数超过列表数，取列表数
                 if(len > 1){
-                    if(isRoll){
-                        sil = setInterval(function(){
-                            roll(orientation, num, v);
-                        },space);
-                    }
                     $self.on('click', '.pre', function(){
-                        if(isStart){
-                            //横向滚动
-                            if(orientation === 'left' || orientation === 'right'){
-                                roll('left', num, v);
-                            } else{           //纵向滚动
-                                roll('top', num, v);
-                            }
-                        }
-                    }).
-                    on('click', '.next', function(){
                         if(isStart){
                             //横向滚动
                             if(orientation === 'left' || orientation === 'right'){
@@ -116,19 +102,63 @@
                             }
                         }
                     }).
-                    on('mouseover', function(){
-                        clearInterval(sil);
+                    on('click', '.next', function(){
+                        if(isStart){
+                            //横向滚动
+                            if(orientation === 'left' || orientation === 'right'){
+                                roll('left', num, v);
+                            } else{           //纵向滚动
+                                roll('top', num, v);
+                            }
+                        }
                     }).
-                    on('mouseout', function(){
+                    hover(function(){
+                        clearInterval(timer);
+                    }, function(){
                         if(isRoll){
-                            sil = setInterval(function(){
+                            timer = setInterval(function(){
                                 roll(orientation, num, v);
                             },space);
                         }
-                    });
+                    }).
+                    trigger('mouseout');
                 }
             };
 
         init();
     };
+    $.fn.rollNoInterval = function(){
+        var $self = this,
+            $ul = $self.find('.roll__list'),
+            $item = $ul.find('li'),
+            move = function(ori){
+                var offset, i,
+                    range,
+                    $sliceItem,
+                    $cloneSliceItem;
+
+                if(ori === 'left' || ori === 'top'){
+                    $sliceItem = $($item[0]);
+                } else if(ori === 'right' || ori === 'bottom'){
+                    $sliceItem = $item[$item.length - 1];
+                }
+                $cloneSliceItem = $sliceItem.clone();
+                switch (ori){
+                    case 'left':
+                        range = $sliceItem.outerWidth(true);
+                        $ul.append($cloneSliceItem);
+                        offset = $self.scrollLeft;
+                        if(offset < range){
+                            i = offset + 1;
+                            $self.scrollLeft(i);
+                        } else{
+                            $sliceItem.remove();
+                            $self.scrollLeft(0);
+                        }
+
+
+                        break;
+                }
+            }
+    }
 })(jQuery);
