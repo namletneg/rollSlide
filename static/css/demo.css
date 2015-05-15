@@ -20,7 +20,13 @@ p{
 .roll-wrap{
     position: relative;
     width: 100%;
+    height: 100px;
     overflow: hidden;
+}
+.roll-wrap .roll__list{
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 .roll_row .roll__list::before, .roll_row .roll__list::after {
     content: "";
@@ -69,6 +75,9 @@ p{
     width: 100%;
     height: 200px;
     overflow: hidden;
+}
+.roll_col .roll__list{
+    width: 100%;
 }
 .h600{
     height: 600px;

@@ -45,18 +45,18 @@
                     case 'left':
                         $ul.append(cloneSliceItem);
                         $ul.animate({
-                            'margin-left': -range + 'px'
+                            'left': -range + 'px'
                         },v,function(){
-                            $(this).css({'margin-left': 0});
+                            $(this).css({'left': 0});
                             $(sliceItem).remove();
                             isStart = true;    //开启滚动
                         });
                         break;
                     case 'right':
                         $ul.prepend(cloneSliceItem);
-                        $ul.css('margin-left', -range + 'px');
+                        $ul.css('left', -range + 'px');
                         $ul.animate({
-                            'margin-left': 0
+                            'left': 0
                         },v,function(){
                             $(sliceItem).remove();
                             isStart = true;    //开启滚动
@@ -65,18 +65,18 @@
                     case 'top':
                         $ul.append(cloneSliceItem);
                         $ul.animate({
-                            'margin-top': -range + 'px'
+                            'top': -range + 'px'
                         },v,function(){
-                            $(this).css({'margin-top': 0});
+                            $(this).css({'top': 0});
                             $(sliceItem).remove();
                             isStart = true;    //开启滚动
                         });
                         break;
                     case 'bottom':
                         $ul.prepend(cloneSliceItem);
-                        $ul.css('margin-top', -range + 'px');
+                        $ul.css('top', -range + 'px');
                         $ul.animate({
-                            'margin-top': 0
+                            'top': 0
                         },v, function(){
                             $(sliceItem).remove();
                             isStart = true;    //开启滚动
