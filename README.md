@@ -5,7 +5,8 @@
     
         参数 obj 为对象，
         
-                orientation： string， 滚动方式 'left','right','top','bottom' 4个方向，默认为 'left'
+                orientation： string， 滚动方式 'left',
+                'right','top','bottom' 4个方向，默认为 'left'
                 
                 num： number， 滚动数量  默认为 1
                 
