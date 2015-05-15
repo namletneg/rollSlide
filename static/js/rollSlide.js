@@ -131,34 +131,114 @@
         var $self = this,
             $ul = $self.find('.roll__list'),
             $item = $ul.find('li'),
-            move = function(ori){
+            len = $item.length,
+            timer,
+            left = function(){
                 var offset, i,
                     range,
-                    $sliceItem,
-                    $cloneSliceItem;
+                    $sliceItem;
 
-                if(ori === 'left' || ori === 'top'){
-                    $sliceItem = $($item[0]);
-                } else if(ori === 'right' || ori === 'bottom'){
-                    $sliceItem = $item[$item.length - 1];
-                }
-                $cloneSliceItem = $sliceItem.clone();
-                switch (ori){
-                    case 'left':
+                $sliceItem = $($item[0]);
+                range = $sliceItem.outerWidth(true);
+                timer = setInterval(function(){
+                    offset = $ul.css('left');
+                    offset = parseInt(offset);
+                    if(offset > -range){
+                        i = offset - 1;
+                        $ul.css('left', i + 'px');
+                        offset = $ul.css('left');
+                    } else{
+                        $sliceItem.detach();
+                        $ul.css('left', 0);
+                        $ul.append($sliceItem);
+                        $sliceItem = $($ul.find('li')[0]);
                         range = $sliceItem.outerWidth(true);
-                        $ul.append($cloneSliceItem);
-                        offset = $self.scrollLeft;
-                        if(offset < range){
-                            i = offset + 1;
-                            $self.scrollLeft(i);
-                        } else{
-                            $sliceItem.remove();
-                            $self.scrollLeft(0);
-                        }
+                    }
+                }, 50);
+            },
+            right = function(){
+                var offset, i,
+                    range,
+                    $sliceItem;
 
+                $sliceItem = $($item[len - 1]);
+                range = $sliceItem.outerWidth(true);
+                timer = setInterval(function(){
+                    offset = $ul.css('right');
+                    offset = parseInt(offset);
+                    if(offset > -range){
+                        i = offset - 1;
+                        $ul.css('right', i + 'px');
+                        offset = $ul.css('right');
+                    } else{
+                        $sliceItem.detach();
+                        $ul.css('right', 0);
+                        $ul.prepend($sliceItem);
+                        $sliceItem = $($ul.find('li')[len - 1]);
+                        range = $sliceItem.outerWidth(true);
+                    }
+                }, 50);
+            },
+            top = function(){
+                var offset, i,
+                    range,
+                    $sliceItem;
 
-                        break;
-                }
-            }
+                $sliceItem = $($item[0]);
+                range = $sliceItem.outerHeight(true);
+                timer = setInterval(function(){
+                    offset = $ul.css('top');
+                    offset = parseInt(offset);
+                    if(offset > -range){
+                        i = offset - 1;
+                        $ul.css('top', i + 'px');
+                        offset = $ul.css('top');
+                    } else{
+                        $sliceItem.detach();
+                        $ul.css('top', 0);
+                        $ul.append($sliceItem);
+                        $sliceItem = $($ul.find('li')[0]);
+                        range = $sliceItem.outerHeight(true);
+                    }
+                }, 50);
+            },
+            bottom = function(){
+                var offset, i,
+                    range,
+                    $sliceItem;
+
+                $sliceItem = $($item[len - 1]);
+                range = $sliceItem.outerHeight(true);
+                timer = setInterval(function(){
+                    offset = $ul.css('bottom');
+                    offset = parseInt(offset);
+                    if(offset > -range){
+                        i = offset - 1;
+                        $ul.css('bottom', i + 'px');
+                        offset = $ul.css('bottom');
+                    } else{
+                        $sliceItem.detach();
+                        $ul.css('bottom', 0);
+                        $ul.prepend($sliceItem);
+                        $sliceItem = $($ul.find('li')[len - 1]);
+                        range = $sliceItem.outerHeight(true);
+                    }
+                }, 50);
+            },
+            init = function(){
+                $self.hover(function(){
+                    clearInterval(timer);
+                }, function(){
+
+                });
+            };
+
+        //init();
+        return {
+            left: left,
+            right: right,
+            top: top,
+            bottom: bottom
+        }
     }
 })(jQuery);

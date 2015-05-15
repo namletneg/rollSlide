@@ -24,9 +24,7 @@ p{
     overflow: hidden;
 }
 .roll-wrap .roll__list{
-    position: absolute;
-    left: 0;
-    top: 0;
+
 }
 .roll_row .roll__list::before, .roll_row .roll__list::after {
     content: "";
